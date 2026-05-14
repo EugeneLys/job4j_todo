@@ -1,0 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="navigation" class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+                <span class="navbar-brand">ToDo tasks</span>
+                <div class="collapse navbar-collapse">
+                        <div class="navbar-nav">
+                                <a class="nav-item nav-link" th:href="@{/tasks}">All tasks</a>
+                                <a class="nav-item nav-link" th:href="@{/tasks/create}">Create task</a>
+                        </div>
+                </div>
+        </div>
+</nav>

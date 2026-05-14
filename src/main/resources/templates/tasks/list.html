@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/header :: header}"></head>
+<body>
+<div class="container">
+  <div th:replace="~{fragments/navigation :: navigation}"></div>
+  <div class="container">
+  <div class="row">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Created</th>
+        <th scope="col">done</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="task: ${tasks}">
+        <td th:text="${task.id}" />
+        <td>
+          <a th:text="${task.name}"
+             th:href="@{/tasks/{taskId}(taskId=${task.id})}">
+          </a>
+        </td>
+        <td th:text="${#temporals.format(task.created, 'dd-MM-yyyy HH:mm')}" />        <td th:text="${task.done}" />
+      </tr>
+      </tbody>
+    </table>
+  </div>
+    <div class="mb-3 row">
+      <div class="col-6"></div>
+      <div class="col-6">
+        <div class="row mt-4">
+            <div class="col-md-4"></div>
+            <div class="col-md-2 col-sm-6 mb-2"><a class="btn btn-danger w-100"
+                                th:href="@{/tasks/create}">Create task</a></div>
+          <div class="col-md-2 col-sm-6 mb-2">
+            <a class="btn btn-primary w-100" th:href="@{/tasks(filter='all')}">All</a>
+          </div>
+          <div class="col-md-2 col-sm-6 mb-2">
+            <a class="btn btn-primary w-100" th:href="@{/tasks(filter='new')}">New</a>
+          </div>
+          <div class="col-md-2 col-sm-6 mb-2">
+            <a class="btn btn-primary w-100" th:href="@{/tasks(filter='done')}">Done</a>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+</div>
+</body>
+</html>
