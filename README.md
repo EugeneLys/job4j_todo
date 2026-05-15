@@ -14,19 +14,19 @@ or using `create database todo;` command in terminal;
 Look at usual views of working in this application:
 
 View of all tasks list:
-![](src/main/resources/img/allTasks.png)
+![](img/allTasks.png)
 
 View of done tasks list:
-![](src/main/resources/img/doneTasksList.png)
+![](img/doneTasksList.png)
 
 View of new (in work) tasks list:
-![](src/main/resources/img/newTasksList.png)
+![](img/newTasksList.png)
 
 View of creation of new task: 
-![](src/main/resources/img/create.png)
+![](img/create.png)
 
 View of update of the task:
-![](src/main/resources/img/update.png)
+![](img/update.png)
 
 your feedback is welcome:
 eugene.lysakov@gmail.com
