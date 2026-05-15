@@ -73,6 +73,28 @@ public class PostgresTaskRepository implements TaskRepository {
     }
 
     @Override
+    public boolean done(int id) {
+        Session session = sf.openSession();
+        try {
+            session.beginTransaction();
+            int result = session.createMutationQuery(
+                            "UPDATE Task SET done = :fDone WHERE id = :fId")
+                    .setParameter("fId", id)
+                    .setParameter("fDone", true)
+                    .executeUpdate();
+            session.getTransaction().commit();
+            return result > 0;
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            return false;
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
     public Collection<Task> findAll() {
         try (Session session = sf.openSession()) {
             session.beginTransaction();

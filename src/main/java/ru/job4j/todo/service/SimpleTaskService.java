@@ -32,6 +32,11 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
+    public boolean done(int id) {
+        return taskRepository.done(id);
+    }
+
+    @Override
     public Collection<Task> findAll() {
         return taskRepository.findAll();
     }

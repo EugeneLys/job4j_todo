@@ -94,14 +94,11 @@ public class TaskController {
 
     @GetMapping("/done/{id}")
     public String makeDone(@PathVariable int id, Model model) {
-        var taskOptional = taskService.findById(id);
-        if (taskOptional.isEmpty()) {
-            model.addAttribute("message", "No task with such id was found");
+        var doneTrue = taskService.done(id);
+        if (!doneTrue) {
+            model.addAttribute("message", "Couldn't make task done");
             return "errors/404";
         }
-        Task task = taskOptional.get();
-        task.setDone(!task.isDone());
-        taskService.update(task);
-        return "redirect:/tasks/" + id;
+        return "redirect:/tasks";
     }
 }

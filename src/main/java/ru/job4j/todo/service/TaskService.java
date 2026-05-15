@@ -13,6 +13,8 @@ public interface TaskService {
 
     boolean update(Task task);
 
+    boolean done(int id);
+
     Collection<Task> findAll();
 
     boolean delete(int id);
