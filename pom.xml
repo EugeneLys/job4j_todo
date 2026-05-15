@@ -19,13 +19,23 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <liquibase.config>src/main/resources/db/liquibase.properties</liquibase.config>
     </properties>
 
     <profiles>
         <profile>
+            <id>test</id>
+            <properties>
+                <liquibase.config>src/main/resources/db/liquibase_test.properties</liquibase.config>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
             <id>production</id>
             <properties>
-                <liquibase.config>db/liquibase.properties</liquibase.config>
+                <liquibase.config>src/main/resources/db/liquibase.properties</liquibase.config>
             </properties>
         </profile>
     </profiles>
@@ -133,7 +143,7 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>4.23.1</version>
                 <configuration>
-                    <propertyFile>src/main/resources/db/liquibase.properties</propertyFile>
+                    <propertyFile>${liquibase.config}</propertyFile>
                 </configuration>
                 <executions>
                     <execution>
@@ -144,6 +154,13 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>2.3.232</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
