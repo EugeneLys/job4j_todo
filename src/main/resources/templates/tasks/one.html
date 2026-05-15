@@ -19,10 +19,6 @@
                       name="description" th:field="*{description}"
                       rows="25" placeholder="What's the task to do"></textarea>
         </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="done" th:field="*{done}">
-            <label class="form-check-label" for="done"><b>Task done</b></label>
-        </div>
         <div class="row mt-4">
             <div class="col-md-4"></div>
             <div class="col-md-2 col-sm-3 mb-2">
@@ -35,7 +31,10 @@
                 <button class="btn btn-primary w-100" type="submit">Update</button>
             </div>
             <div th:if="${!task.done}" class="col-md-2 col-sm-4 mb-2">
-                <a class="btn btn-success w-100" th:href="@{/tasks/done/{id}(id=${task.id})}">Done</a>
+                <a th:if="${!task.done}" class="btn btn-success w-100"
+                   th:href="@{/tasks/done/{id}(id=${task.id})}">Done</a>
+                <a th:if="${task.done}" class="btn btn-warning w-100"
+                   th:href="@{/tasks/done/{id}(id=${task.id})}">In Work</a>
             </div>
         </div>
     </form>
