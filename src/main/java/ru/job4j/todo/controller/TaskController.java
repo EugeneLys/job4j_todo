@@ -1,6 +1,7 @@
 package ru.job4j.todo.controller;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import ru.job4j.todo.service.TaskService;
 
 import java.util.Collection;
 
+@Slf4j
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
@@ -51,6 +53,7 @@ public class TaskController {
             taskService.save(task);
             return "redirect:/tasks";
         } catch (Exception exception) {
+            log.error("Failed to create task: {}", task, exception);
             model.addAttribute("message", exception.getMessage());
             return "errors/404";
         }
@@ -77,6 +80,7 @@ public class TaskController {
             }
             return "redirect:/tasks";
         } catch (Exception exception) {
+            log.error("Error during task update, id: {}", task.getId(), exception);
             model.addAttribute("message", exception.getMessage());
             return "errors/404";
         }
