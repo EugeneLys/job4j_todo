@@ -20,4 +20,6 @@ public interface TaskService {
     boolean delete(int id);
 
     Collection<Task> findByDone(boolean done);
+
+    Collection<Task> findByFilter(String filter);
 }

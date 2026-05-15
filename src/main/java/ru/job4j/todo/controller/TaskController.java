@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.service.TaskService;
 
-import java.util.Collection;
-
 @Slf4j
 @Controller
 @RequestMapping("/tasks")
@@ -22,22 +20,9 @@ public class TaskController {
     }
 
     @GetMapping
-    public String getAll(Model model, HttpSession session,
+    public String getAll(Model model,
                          @RequestParam(value = "filter", defaultValue = "all") String filter) {
-        Collection<Task> tasks;
-
-        switch (filter) {
-            case "new":
-                tasks = taskService.findByDone(false);
-                break;
-            case "done":
-                tasks = taskService.findByDone(true);
-                break;
-            default:
-                tasks = taskService.findAll();
-                break;
-        }
-        model.addAttribute("tasks", tasks);
+        model.addAttribute("tasks", taskService.findByFilter(filter));
         return "tasks/list";
     }
 
@@ -55,7 +40,7 @@ public class TaskController {
         } catch (Exception exception) {
             log.error("Failed to create task: {}", task, exception);
             model.addAttribute("message", exception.getMessage());
-            return "errors/404";
+            return "errors/500";
         }
     }
 
@@ -82,7 +67,7 @@ public class TaskController {
         } catch (Exception exception) {
             log.error("Error during task update, id: {}", task.getId(), exception);
             model.addAttribute("message", exception.getMessage());
-            return "errors/404";
+            return "errors/500";
         }
     }
 

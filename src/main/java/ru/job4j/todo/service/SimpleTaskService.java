@@ -50,4 +50,12 @@ public class SimpleTaskService implements TaskService {
     public Collection<Task> findByDone(boolean done) {
         return taskRepository.findByDone(done);
     }
+
+    public Collection<Task> findByFilter(String filter) {
+        return switch (filter) {
+            case "new" -> findByDone(false);
+            case "done" -> findByDone(true);
+            default -> findAll();
+        };
+    }
 }
