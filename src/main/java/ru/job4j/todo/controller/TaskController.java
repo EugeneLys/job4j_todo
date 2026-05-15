@@ -99,6 +99,6 @@ public class TaskController {
             model.addAttribute("message", "Couldn't make task done");
             return "errors/404";
         }
-        return "redirect:/tasks";
+        return "redirect:/tasks/" + id;
     }
 }
