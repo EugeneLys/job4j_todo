@@ -33,7 +33,7 @@ public class UserController {
     public String register(@ModelAttribute("user") User user, Model model) {
         try {
             userService.save(user);
-            return "redirect:/users";
+            return "redirect:/users/login";
         } catch (Exception exception) {
             log.error("Failed to register new user: {}", user, exception);
             model.addAttribute("message", exception.getMessage());
@@ -49,10 +49,11 @@ public class UserController {
     @PostMapping("/login")
     public String loginUser(@ModelAttribute User user, Model model, HttpServletRequest request) {
         try {
-            var userOptional = userService.findByLoginAndPassword(user.getLogin(), user.getPassword());
+            var userOptional = userService.findByLoginAndPassword(user.getLogin(),
+                    user.getPassword());
             if (userOptional.isEmpty()) {
                 model.addAttribute("error", "Incorrect login or password.");
-                return "errors/404";
+                return "/users/login";
             }
             var session = request.getSession();
             session.setAttribute("user", userOptional.get());
@@ -61,7 +62,7 @@ public class UserController {
             model.addAttribute("message", exception.getMessage());
             return "errors/500";
         }
-        return "/users";
+        return "redirect:/tasks/list";
     }
 
     @GetMapping("/logout")

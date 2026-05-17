@@ -35,12 +35,13 @@ public class PostgresUserRepository implements UserRepository {
     public Optional<User> findByLoginAndPassword(String login, String password) {
         try (Session session = sf.openSession()) {
             session.beginTransaction();
-            var result = session.createSelectionQuery("From User u where u.login = :fLogin, "
+            var result = session.createSelectionQuery("From User u where u.login = :fLogin and "
                                     + "u.password = :fPassword",
                             User.class)
                     .setParameter("fLogin", login)
                     .setParameter("fPassword", password)
                     .uniqueResultOptional();
+            System.out.println("User found: " + result.isPresent());
             session.getTransaction().commit();
             return result;
         } catch (Exception e) {

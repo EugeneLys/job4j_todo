@@ -19,7 +19,7 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public String getAll(Model model,
                          @RequestParam(value = "filter", defaultValue = "all") String filter) {
         model.addAttribute("tasks", taskService.findByFilter(filter));
