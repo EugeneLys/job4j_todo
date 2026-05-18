@@ -1,5 +1,6 @@
 package ru.job4j.todo.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,7 @@ import ru.job4j.todo.model.User;
 
 import java.util.Optional;
 
+@Slf4j
 @Repository
 public class PostgresUserRepository implements UserRepository {
     private final SessionFactory sf;
@@ -25,6 +27,7 @@ public class PostgresUserRepository implements UserRepository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            log.error("Failed to save user: {}", user, e);
         } finally {
             session.close();
         }
@@ -45,7 +48,8 @@ public class PostgresUserRepository implements UserRepository {
             session.getTransaction().commit();
             return result;
         } catch (Exception e) {
-            return Optional.empty();
+            log.error("Failed to find user with such login and password");
         }
+        return Optional.empty();
     }
 }
